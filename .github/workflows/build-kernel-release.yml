@@ -63,7 +63,7 @@ jobs:
             folder: "KernelSU"
             branch: "susfs-main"
             # ksu_patches: ""
-            kernel_patches: "hooks/scope_min_manual_hooks_v1.6.patch"
+            # kernel_patches: "hooks/scope_min_manual_hooks_v1.6.patch"
             extra_configs: "CONFIG_KSU_MANUAL_HOOK=y CONFIG_KSU_MANUAL_SU=n CONFIG_COMPAT=y CONFIG_ZRAM_GS_WRITEBACK=y"
             # susfs_patch: "kernel_patches/50_add_susfs_in_gki-android14-6.1.patch"
             ak3_suffix: "_SUKISU"
@@ -193,26 +193,26 @@ jobs:
           fi
 
           cd "${{ env.kernel_dir }}"
-          # patch -p1 < 50_add_susfs_in_gki-${{ matrix.kernel.android_version }}-${{ matrix.kernel.kernel_version }}.patch || true
+          patch -p1 < 50_add_susfs_in_gki-${{ matrix.kernel.android_version }}-${{ matrix.kernel.kernel_version }}.patch || true
           patch -p1 --fuzz=3 < ${{ env.james_dir }}/sultan/sys.c_fix.patch
 
           # Add SUSFS configuration settings
-          echo "CONFIG_KSU_SUSFS=n"  >> ${{ env.kernel_dir }}/arch/arm64/configs/${{ matrix.kernel.defconfig }}
-          # echo "CONFIG_KSU_SUSFS_SUS_SU=n" >> ${{ env.kernel_dir }}/arch/arm64/configs/${{ matrix.kernel.defconfig }}
-          # echo "CONFIG_KSU_SUSFS_HAS_MAGIC_MOUNT=y"  >> ${{ env.kernel_dir }}/arch/arm64/configs/${{ matrix.kernel.defconfig }}
-          # echo "CONFIG_KSU_SUSFS_SUS_PATH=y"  >> ${{ env.kernel_dir }}/arch/arm64/configs/${{ matrix.kernel.defconfig }}
-          # echo "CONFIG_KSU_SUSFS_SUS_MOUNT=y"  >> ${{ env.kernel_dir }}/arch/arm64/configs/${{ matrix.kernel.defconfig }}
-          # echo "CONFIG_KSU_SUSFS_AUTO_ADD_SUS_KSU_DEFAULT_MOUNT=y"  >> ${{ env.kernel_dir }}/arch/arm64/configs/${{ matrix.kernel.defconfig }}
-          # echo "CONFIG_KSU_SUSFS_AUTO_ADD_SUS_BIND_MOUNT=y"  >> ${{ env.kernel_dir }}/arch/arm64/configs/${{ matrix.kernel.defconfig }}
-          # echo "CONFIG_KSU_SUSFS_SUS_KSTAT=y"  >> ${{ env.kernel_dir }}/arch/arm64/configs/${{ matrix.kernel.defconfig }}
-          # echo "CONFIG_KSU_SUSFS_SUS_OVERLAYFS=n"  >> ${{ env.kernel_dir }}/arch/arm64/configs/${{ matrix.kernel.defconfig }}
-          # echo "CONFIG_KSU_SUSFS_TRY_UMOUNT=y"  >> ${{ env.kernel_dir }}/arch/arm64/configs/${{ matrix.kernel.defconfig }}
-          # echo "CONFIG_KSU_SUSFS_AUTO_ADD_TRY_UMOUNT_FOR_BIND_MOUNT=y"  >> ${{ env.kernel_dir }}/arch/arm64/configs/${{ matrix.kernel.defconfig }}
-          # echo "CONFIG_KSU_SUSFS_SPOOF_UNAME=y"  >> ${{ env.kernel_dir }}/arch/arm64/configs/${{ matrix.kernel.defconfig }}
-          # echo "CONFIG_KSU_SUSFS_ENABLE_LOG=y"  >> ${{ env.kernel_dir }}/arch/arm64/configs/${{ matrix.kernel.defconfig }}
-          # echo "CONFIG_KSU_SUSFS_HIDE_KSU_SUSFS_SYMBOLS=y"  >> ${{ env.kernel_dir }}/arch/arm64/configs/${{ matrix.kernel.defconfig }}
-          # echo "CONFIG_KSU_SUSFS_SPOOF_CMDLINE_OR_BOOTCONFIG=y"  >> ${{ env.kernel_dir }}/arch/arm64/configs/${{ matrix.kernel.defconfig }}
-          # echo "CONFIG_KSU_SUSFS_OPEN_REDIRECT=y"  >> ${{ env.kernel_dir }}/arch/arm64/configs/${{ matrix.kernel.defconfig }}
+          echo "CONFIG_KSU_SUSFS=y"  >> ${{ env.kernel_dir }}/arch/arm64/configs/${{ matrix.kernel.defconfig }}
+          echo "CONFIG_KSU_SUSFS_SUS_SU=n" >> ${{ env.kernel_dir }}/arch/arm64/configs/${{ matrix.kernel.defconfig }}
+          echo "CONFIG_KSU_SUSFS_HAS_MAGIC_MOUNT=y"  >> ${{ env.kernel_dir }}/arch/arm64/configs/${{ matrix.kernel.defconfig }}
+          echo "CONFIG_KSU_SUSFS_SUS_PATH=y"  >> ${{ env.kernel_dir }}/arch/arm64/configs/${{ matrix.kernel.defconfig }}
+          echo "CONFIG_KSU_SUSFS_SUS_MOUNT=y"  >> ${{ env.kernel_dir }}/arch/arm64/configs/${{ matrix.kernel.defconfig }}
+          echo "CONFIG_KSU_SUSFS_AUTO_ADD_SUS_KSU_DEFAULT_MOUNT=y"  >> ${{ env.kernel_dir }}/arch/arm64/configs/${{ matrix.kernel.defconfig }}
+          echo "CONFIG_KSU_SUSFS_AUTO_ADD_SUS_BIND_MOUNT=y"  >> ${{ env.kernel_dir }}/arch/arm64/configs/${{ matrix.kernel.defconfig }}
+          echo "CONFIG_KSU_SUSFS_SUS_KSTAT=y"  >> ${{ env.kernel_dir }}/arch/arm64/configs/${{ matrix.kernel.defconfig }}
+          echo "CONFIG_KSU_SUSFS_SUS_OVERLAYFS=n"  >> ${{ env.kernel_dir }}/arch/arm64/configs/${{ matrix.kernel.defconfig }}
+          echo "CONFIG_KSU_SUSFS_TRY_UMOUNT=y"  >> ${{ env.kernel_dir }}/arch/arm64/configs/${{ matrix.kernel.defconfig }}
+          echo "CONFIG_KSU_SUSFS_AUTO_ADD_TRY_UMOUNT_FOR_BIND_MOUNT=y"  >> ${{ env.kernel_dir }}/arch/arm64/configs/${{ matrix.kernel.defconfig }}
+          echo "CONFIG_KSU_SUSFS_SPOOF_UNAME=y"  >> ${{ env.kernel_dir }}/arch/arm64/configs/${{ matrix.kernel.defconfig }}
+          echo "CONFIG_KSU_SUSFS_ENABLE_LOG=y"  >> ${{ env.kernel_dir }}/arch/arm64/configs/${{ matrix.kernel.defconfig }}
+          echo "CONFIG_KSU_SUSFS_HIDE_KSU_SUSFS_SYMBOLS=y"  >> ${{ env.kernel_dir }}/arch/arm64/configs/${{ matrix.kernel.defconfig }}
+          echo "CONFIG_KSU_SUSFS_SPOOF_CMDLINE_OR_BOOTCONFIG=y"  >> ${{ env.kernel_dir }}/arch/arm64/configs/${{ matrix.kernel.defconfig }}
+          echo "CONFIG_KSU_SUSFS_OPEN_REDIRECT=y"  >> ${{ env.kernel_dir }}/arch/arm64/configs/${{ matrix.kernel.defconfig }}
 
       - name: Cache Kernel Build
         uses: actions/cache@v4
