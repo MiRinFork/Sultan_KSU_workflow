@@ -70,7 +70,7 @@ jobs:
             # kpm: "https://raw.githubusercontent.com/ShirkNeko/SukiSU_patch/refs/heads/main/kpm/patch_linux"
 
         # susfs: [false, true]
-        susfs: [true]
+        susfs: [false]
         exclude:
           - build:
               ksu: false
